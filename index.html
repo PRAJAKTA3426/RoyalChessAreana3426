@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1018">
+  <title>Royal Chess Arena</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="app">
+    <section id="home-screen" class="home-screen">
+      <header class="brand"><span class="brand-mark">♜</span><span>ROYAL <b>CHESS ARENA</b></span></header>
+      <div class="hero">
+        <p class="eyebrow">A CLASSIC, REIMAGINED</p>
+        <h1>Make your<br><span>next move</span></h1>
+        <p class="hero-copy">A beautifully crafted 3D chess experience. Take your seat at the board.</p>
+        <div class="mode-grid">
+          <button class="mode-card featured" data-mode="computer"><span class="card-icon">♞</span><span><b>Play the computer</b><small>Challenge the offline AI</small></span><i>→</i></button>
+          <button class="mode-card" data-mode="two-player"><span class="card-icon">♟</span><span><b>Two players</b><small>Play together locally</small></span><i>→</i></button>
+          <button class="mode-card" data-mode="practice"><span class="card-icon">✦</span><span><b>Practice</b><small>Explore, learn, improve</small></span><i>→</i></button>
+        </div>
+        <button id="settings-open" class="text-button">⚙ &nbsp; Game settings</button>
+      </div>
+      <div class="home-note"><span class="status-dot"></span> READY TO PLAY <span>·</span> NO INTERNET REQUIRED</div>
+    </section>
+
+    <section id="game-screen" class="game-screen hidden">
+      <header class="topbar">
+        <button id="main-menu" class="icon-button" aria-label="Main menu" title="Main menu">←</button>
+        <div class="brand compact"><span class="brand-mark">♜</span><span>ROYAL <b>CHESS ARENA</b></span></div>
+        <div class="topbar-actions"><span id="mode-label" class="mode-label">VS COMPUTER</span><button id="sound-toggle" class="icon-button" aria-label="Toggle sound" title="Toggle sound">♫</button><button id="settings-game" class="icon-button" aria-label="Settings" title="Settings">⚙</button></div>
+      </header>
+      <div class="game-layout">
+        <section class="board-column">
+          <div class="player-strip">
+            <div class="player-avatar black-avatar">♚</div><div class="player-info"><b id="black-name">Computer</b><small id="black-subtitle">BLACK · OPPONENT</small></div><div id="black-clock" class="clock">10:00</div>
+          </div>
+          <div class="board-frame">
+            <div id="board-loading" class="board-loading">Preparing the board…</div>
+            <div id="board-host" aria-label="Interactive 3D chessboard"></div>
+            <div id="pause-overlay" class="pause-overlay hidden"><span>Ⅱ</span><b>GAME PAUSED</b><small>Resume when you're ready</small></div>
+          </div>
+          <div class="player-strip bottom-player">
+            <div class="player-avatar white-avatar">♔</div><div class="player-info"><b id="white-name">You</b><small id="white-subtitle">WHITE · YOUR TURN</small></div><div id="white-clock" class="clock">10:00</div>
+          </div>
+          <div class="board-hint">DRAG TO ROTATE <span>·</span> SCROLL TO ZOOM <span>·</span> CLICK A PIECE TO MOVE</div>
+        </section>
+        <aside class="game-panel">
+          <div class="turn-card"><div class="turn-indicator"><span class="turn-dot"></span><span id="turn-label">White to move</span></div><p id="status-message">Select a piece to see its legal moves.</p></div>
+          <div class="panel-section captured-section">
+            <div class="section-heading">CAPTURED PIECES <span>♟</span></div>
+            <div class="captured-row"><small>BY WHITE</small><div id="captured-white" class="captured-pieces">—</div></div>
+            <div class="captured-row"><small>BY BLACK</small><div id="captured-black" class="captured-pieces">—</div></div>
+          </div>
+          <div class="panel-section moves-section">
+            <div class="section-heading">MOVE HISTORY <span id="move-count">0 MOVES</span></div>
+            <div id="move-list" class="move-list"><p class="empty-moves">Your game begins here.</p></div>
+          </div>
+          <div id="practice-tools" class="practice-tools hidden"><button id="hint-button" class="secondary-button">✦ &nbsp; Get a hint</button><p id="hint-message">Hints suggest a legal move for the side to move.</p></div>
+          <div class="game-actions">
+            <button id="undo-button" class="secondary-button">↶ &nbsp; Undo</button>
+            <button id="pause-button" class="secondary-button">Ⅱ &nbsp; Pause</button>
+            <button id="restart-button" class="primary-button">New game</button>
+          </div>
+          <div class="offline-label"><span class="status-dot"></span> LOCAL GAME · OFFLINE READY</div>
+        </aside>
+      </div>
+      <div id="promotion-overlay" class="modal-backdrop hidden">
+        <section class="promotion-modal" role="dialog" aria-modal="true" aria-labelledby="promotion-title">
+          <p class="eyebrow">A PAWN HAS REACHED THE FINAL RANK</p>
+          <h2 id="promotion-title">Choose a promotion</h2>
+          <div class="promotion-options">
+            <button class="promotion-choice" data-promotion="q" aria-label="Promote to queen"><span class="promotion-glyph">♕</span><small>QUEEN</small></button>
+            <button class="promotion-choice" data-promotion="r" aria-label="Promote to rook"><span class="promotion-glyph">♖</span><small>ROOK</small></button>
+            <button class="promotion-choice" data-promotion="b" aria-label="Promote to bishop"><span class="promotion-glyph">♗</span><small>BISHOP</small></button>
+            <button class="promotion-choice" data-promotion="n" aria-label="Promote to knight"><span class="promotion-glyph">♘</span><small>KNIGHT</small></button>
+          </div>
+        </section>
+      </div>
+      <div id="result-overlay" class="result-overlay hidden"><div class="result-card"><span id="result-icon" class="result-icon">♔</span><p class="eyebrow">GAME COMPLETE</p><h2 id="result-title">Victory</h2><p id="result-copy">Well played.</p><div class="result-actions"><button id="result-rematch" class="primary-button">Play again</button><button id="result-menu" class="secondary-button">Main menu</button></div></div></div>
+    </section>
+
+    <div id="settings-modal" class="modal-backdrop hidden">
+      <section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <button id="settings-close" class="modal-close" aria-label="Close settings">×</button>
+        <p class="eyebrow">PERSONALIZE YOUR TABLE</p><h2 id="settings-title">Game settings</h2>
+        <label class="setting-row"><span><b>AI difficulty</b><small>Choose the computer's search depth</small></span><select id="difficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></label>
+        <label class="setting-row"><span><b>Game clock</b><small>Starting time for each player</small></span><select id="clock-setting"><option value="300">5 minutes</option><option value="600" selected>10 minutes</option><option value="900">15 minutes</option><option value="0">No clock</option></select></label>
+        <label class="setting-row"><span><b>Sound effects</b><small>Play local move sounds</small></span><input id="sound-setting" type="checkbox" checked></label>
+        <button id="settings-done" class="primary-button settings-done">Done</button>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
